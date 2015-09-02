@@ -38,19 +38,22 @@ Vagrant.configure("2") do |config|
     config.vm.box = "ubuntu/trusty64"
     
     config.vm.network :private_network, ip: "192.168.33.12"
-    config.ssh.forward_agent = true
 
     # If ansible is in your path it will provision from your HOST machine
     # If ansible is not found in the path it will be instaled in the VM and provisioned from there
     if which('ansible-playbook')
         config.vm.provision "ansible" do |ansible|
             ansible.playbook = "ansible/playbook.yml"
-            ansible.inventory_path = "ansible/inventories/dev"
-            ansible.limit = 'all'
+            #ansible.inventory_path = "ansible/inventories/dev"
+            #ansible.verbose = 'vvvv'
         end
     else
         config.vm.provision :shell, path: "ansible/windows.sh", args: ["vagrant-lamp"]
     end
 
-    config.vm.synced_folder "./src", "/vagrant"
+    config.vm.network "forwarded_port", guest: 80, host: 8080
+
+    config.vm.synced_folder ".", "/vagrant", disabled: true
+    config.vm.synced_folder "./src", "/var/www", :mount_options => ["dmode=777", "fmode=777"]
+
 end
