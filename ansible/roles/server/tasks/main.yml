@@ -29,21 +29,26 @@
   shell: locale-gen {{server.locale}}
   sudo: yes
 
-- name: remount with acl
+- name: Remount with acl
   sudo: yes
   shell: mount -o remount,acl /
 
-- name: create /var/www/html dir
+- name: Create /var/www/html dir
   file: path=/var/www/html state=directory recurse=yes owner=www-data group=www-data
 
-- name: create projects dir
+- name: Create projects dir
   file: path=/home/vagrant/projects state=directory recurse=yes owner=vagrant group=vagrant
+
+- name: Check if swap exists
+  stat: path=/var/swap.1
+  register: swap_dir
 
 - name: add swap for composer
   sudo: yes
-  shell: {{item}}
+  shell: "{{ item }}"
   with_items:
     - /bin/dd if=/dev/zero of=/var/swap.1 bs=1M count=1024
     - /sbin/mkswap /var/swap.1
     - /sbin/swapon /var/swap.1
+  when: swap_dir.stat.exists == false
 

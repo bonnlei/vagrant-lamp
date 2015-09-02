@@ -1,17 +1,17 @@
 ---
 - name: Check if project example exists
-  stat: path= {{symfony.project_home}}/{{symfony.project_name}}
+  stat: path={{symfony.project_home}}/{{symfony.project_name}}
   register: example_dir
 
 - name: Create new example project
-  shell: {{item}}
+  shell: "{{ item }}"
   with_items:
   - cd {{symfony.project_home}}
   - composer --no-dev --optimize-autoloader --no-interaction create-project symfony/framework-standard-edition {{symfony.project_name}} "{{symfony.version}}.*"
   when: example_dir.stat.exists == false
 
 - name: Check if project config dir
-  stat: path= {{symfony.project_home}}/{{symfony.project_name}}/app/config
+  stat: path={{symfony.project_home}}/{{symfony.project_name}}/app/config
   register: config_dir
 
 - name: Update parameters config
