@@ -1,16 +1,16 @@
 ---
 server:
     install: '1'
-    packages: [imagemagick, nodejs, npm, git]
+    packages: [git, imagemagick, nodejs, npm]
     timezone: Europe/Berlin
     locale: de_DE.UTF-8
 vagrant_local:
     install: '1'
     vm: { base_box: trusty64, hostname: vagrant-lamp, ip: 192.168.33.12, memory: '1024', sharedfolder: ./src, useVagrantCloud: '1', syncType: '0' }
-nginx:
+apache:
     install: '1'
-    docroot: /vagrant
-    servername: myApp.vb
+    docroot: /var/www/html
+    servername: vagrant-lamp
 mysql:
     install: '1'
     root_password: '123'
@@ -21,7 +21,8 @@ mysql:
 php:
     install: '1'
     ppa: php5-5.6
-    packages: [php5-cli, php5-intl, php5-mcrypt, php5-curl, php5-imagick, php-pear, php5-mysql, php5-common, php5-gd, php5-xmlrpc, php5-xsl, php5-xdebug]
+    packages: [php5-cli, php5-intl, php5-mcrypt, php-pear, php5-curl, php5-imagick, php5-common, php5-mysql, php5-xdebug, php5-xmlrpc, php5-xsl, php5-mbstring]
+    peclpackages: [APC, mysql, PDO, PDO_MYSQL]
 xdebug:
     install: '1'
 composer:
