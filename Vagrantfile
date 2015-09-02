@@ -54,6 +54,7 @@ Vagrant.configure("2") do |config|
     config.vm.network "forwarded_port", guest: 80, host: 8080
 
     config.vm.synced_folder ".", "/vagrant", disabled: true
-    config.vm.synced_folder "./src", "/var/www", :mount_options => ["dmode=777", "fmode=777"]
+    config.vm.synced_folder "./src/root", "/var/www/html", :mount_options => ["dmode=777", "fmode=777"]
+    config.vm.synced_folder "./src/projects", "/home/vagrant/projects", :mount_options => ["dmode=777", "fmode=777"]
 
 end
