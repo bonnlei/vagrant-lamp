@@ -1,4 +1,16 @@
+
 ---
 - name: Install xDebug
   sudo: yes
   apt: pkg=php5-xdebug state=latest
+
+- name: Config xDebug
+  sudo: yes
+  lineinfile: dest=/etc/php5/mods-available/xdebug.ini line={{ item }}
+  with_items:
+    - xdebug.remote_host="{{ vagrant_local.vm.ip }}"
+    - xdebug.idekey="INTELLIJ"
+    - xdebug.remote_autostart=1
+    - xdebug.remote_enable=1
+    - xdebug.remote_connect_back=1
+    - xdebug.max_nesting_level=400
