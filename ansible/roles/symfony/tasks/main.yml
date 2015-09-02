@@ -4,10 +4,8 @@
   register: example_dir
 
 - name: Create new example project
-  shell: "{{ item }}"
-  with_items:
-  - cd {{symfony.project_home}}
-  - composer --no-interaction --prefer-dist create-project symfony/framework-standard-edition {{symfony.project_name}} "{{symfony.version}}.*"
+  sudo: no
+  shell: composer --no-interaction --prefer-dist create-project symfony/framework-standard-edition {{symfony.project_home}}/{{symfony.project_name}} "{{symfony.version}}.*"
   when: example_dir.stat.exists == false
 
 - name: Check if project config dir
@@ -15,7 +13,8 @@
   register: config_dir
 
 - name: Update parameters config
-  template: src=parameters.yml.tpl dest={{app.contao.home}}/app/config/parameters.yml
+  sudo: no
+  template: src=parameters.yml.tpl dest={{symfony.project_home}}/{{symfony.project_name}}/app/config/parameters.yml
   when: config_dir.stat.exists == true
 
 
