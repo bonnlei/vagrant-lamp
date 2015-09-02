@@ -12,7 +12,7 @@
 The installation is as easy as cloning a GitHub project:
 
 ```
- $ git clone https://github.com/bonnlei/vagrant-lamp.git vagrant-lamp
+$ git clone https://github.com/bonnlei/vagrant-lamp.git vagrant-lamp
 ```
 
 After the project is added, you can start the environment like this:

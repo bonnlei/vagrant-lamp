@@ -27,4 +27,13 @@ xdebug:
     install: '1'
 composer:
     install: '1'
+symfony:
+    install: '1'
+    version: '2.7'
+    project_name: 'example'
+    project_home: '/home/vagrant/projects'
+
+
+
+
 
