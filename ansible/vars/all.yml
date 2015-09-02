@@ -1,7 +1,7 @@
 ---
 server:
     install: '1'
-    packages: [git, imagemagick, nodejs, npm]
+    packages: [git, imagemagick, nodejs, npm, acl]
     timezone: Europe/Berlin
     locale: de_DE.UTF-8
 vagrant_local:
