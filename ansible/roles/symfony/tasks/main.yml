@@ -7,7 +7,7 @@
   shell: "{{ item }}"
   with_items:
   - cd {{symfony.project_home}}
-  - composer --no-dev --optimize-autoloader --no-interaction create-project symfony/framework-standard-edition {{symfony.project_name}} "{{symfony.version}}.*"
+  - composer --no-interaction --prefer-dist create-project symfony/framework-standard-edition {{symfony.project_name}} "{{symfony.version}}.*"
   when: example_dir.stat.exists == false
 
 - name: Check if project config dir
