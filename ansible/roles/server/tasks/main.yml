@@ -43,12 +43,18 @@
   stat: path=/var/swap.1
   register: swap_dir
 
-- name: add swap for composer
+- name: Add swap for composer
   sudo: yes
   shell: "{{ item }}"
   with_items:
-    - /bin/dd if=/dev/zero of=/var/swap.1 bs=1M count=1024
-    - /sbin/mkswap /var/swap.1
-    - /sbin/swapon /var/swap.1
+    - df -h
+    - dd if=/dev/zero of=/swapfile bs=1M count=1024
+    - dd if=/dev/zero of=/swapfile bs=1M count=1024
+    - mkswap /swapfile
+    - chmod 600 /swapfile
+    - mkswap /swapfile
+    - swapon /swapfile
+    - echo 'echo "/swapfile  none  swap  defaults  0  0" >> /etc/fstab' | sudo sh
+    - free -m
   when: swap_dir.stat.exists == false
 
